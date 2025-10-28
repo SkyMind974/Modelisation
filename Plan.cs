@@ -12,9 +12,9 @@ public class NewMonoBehaviourScript : MonoBehaviour
         Mesh mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
 
-        int gx = 5, gy = 5;
+        int gx = 5, gy = 5; 
         var vertices = new List<Vector3>(gx * gy * 4);
-        var triangles = new List<int>(gx * gy * 6);
+        var triangles = new List<int>(gx * gy * 12); 
 
         for (int y = 0; y < gy; y++)
         {
@@ -25,27 +25,30 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
                 int baseIndex = vertices.Count;
 
-                vertices.Add(new Vector3(ox, oy, 0));
-                vertices.Add(new Vector3(ox, oy + height, 0));
-                vertices.Add(new Vector3(ox + width, oy, 0));
+                vertices.Add(new Vector3(ox,oy,0));
+                vertices.Add(new Vector3(ox,oy + height, 0));
+                vertices.Add(new Vector3(ox + width, oy,0));
                 vertices.Add(new Vector3(ox + width, oy + height, 0));
 
-                triangles.Add(baseIndex + 0);
-                triangles.Add(baseIndex + 1);
-                triangles.Add(baseIndex + 3);
-
-                triangles.Add(baseIndex + 3);
-                triangles.Add(baseIndex + 2);
-                triangles.Add(baseIndex + 0);
+                DrawTriangle(baseIndex + 0, baseIndex + 1, baseIndex + 3);
+                DrawTriangle(baseIndex + 3, baseIndex + 2, baseIndex + 0);
             }
         }
 
         mesh.SetVertices(vertices);
         mesh.SetTriangles(triangles, 0);
         mesh.RecalculateNormals();
-    }
+        mesh.RecalculateBounds();
 
-    void Start()
-    {
+        void DrawTriangle(int a, int b, int c)
+        {
+            triangles.Add(a);
+            triangles.Add(b);
+            triangles.Add(c);
+
+            triangles.Add(c);
+            triangles.Add(b);
+            triangles.Add(a);
+        }
     }
 }

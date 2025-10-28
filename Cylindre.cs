@@ -43,8 +43,6 @@ public class CylindreMeridiens : MonoBehaviour
 
             DrawTriangle(i2 + 0, i2 + 1, i2 + 3);
             DrawTriangle(i2 + 3, i2 + 2, i2 + 0);
-
-
         }
 
 
